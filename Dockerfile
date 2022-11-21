@@ -1,13 +1,11 @@
-FROM haskell:latest
+FROM haskell:9.2.5-slim
 
-ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+RUN apt-get update && apt-get install --yes git
 
-RUN apt-get update && apt-get install --yes \
-    git 
+COPY stack.yaml /root/.stack/global-project/stack.yaml
 
 RUN stack upgrade && \
-    stack --resolver lts-16.27 install \
+  stack install \
     base \
     bytestring \
     conduit-combinators \
@@ -15,3 +13,4 @@ RUN stack upgrade && \
     hakyll \
     mtl \
     stm
+
